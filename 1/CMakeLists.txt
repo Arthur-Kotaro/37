@@ -9,7 +9,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_PREFIX_PATH "F:\\Qt\\6.9.3\\mingw_64\\lib\\cmake")
 find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
 
-add_executable(1 main1.cpp calc.ui calc_backend.h)
+add_executable(1 main1.cpp calc.ui calc_backend.cpp calc_backend.h)
 target_link_libraries(1 Qt::Core Qt::Gui Qt::Widgets)
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
