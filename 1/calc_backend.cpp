@@ -103,14 +103,72 @@ void Calculator::calculate()
         else second_num_i = LineEdit_value2->text().toLong();
         if (!first_num_double && !second_num_double)
         {
-            result_i = first_num_i + second_num_i;
+            switch (operator_symbol)
+            {
+                case '+': result_i = first_num_i + second_num_i;
+                    break;
+                case '-': result_i = first_num_i - second_num_i;
+                    break;
+                case '/':
+                {
+                    if(second_num_i == 0)
+                    {
+                        LineEdit_result->setText("Inf");
+                        return;
+                    }
+                    else
+                    {
+                        result_i = first_num_i / second_num_i;
+                        break;
+                    }
+                }
+
+                case '*': result_i = first_num_i * second_num_i;
+                    break;
+            }
+
             LineEdit_result->setText(QString::number(result_i));
         }
         else
         {
-            if (first_num_double && second_num_double)      result_d = first_num_d + second_num_d;
-            if (first_num_double && !second_num_double)     result_d = first_num_d + static_cast<double>(second_num_i);
-            if (!first_num_double && second_num_double)     result_d = static_cast<double>(first_num_i) + second_num_d;
+            if (first_num_double && second_num_double)
+                switch (operator_symbol)
+                {
+                    case '+': result_d = first_num_d + second_num_d;
+                        break;
+                    case '-': result_d = first_num_d - second_num_d;
+                        break;
+                    case '/': result_d = first_num_d / second_num_d;
+                        break;
+                    case '*': result_d = first_num_d * second_num_d;
+                        break;
+                }
+
+            if (first_num_double && !second_num_double)
+                switch (operator_symbol)
+                {
+                    case '+': result_d = first_num_d + static_cast<double>(second_num_i);
+                        break;
+                    case '-': result_d = first_num_d - static_cast<double>(second_num_i);
+                        break;
+                    case '/': result_d = first_num_d / static_cast<double>(second_num_i);
+                        break;
+                    case '*': result_d = first_num_d * static_cast<double>(second_num_i);
+                        break;
+                }
+
+            if (!first_num_double && second_num_double)
+                switch (operator_symbol)
+                {
+                    case '+': result_d = result_d = static_cast<double>(first_num_i) + second_num_d;
+                        break;
+                    case '-': result_d = result_d = static_cast<double>(first_num_i) - second_num_d;
+                        break;
+                    case '/': result_d = result_d = static_cast<double>(first_num_i) / second_num_d;
+                        break;
+                    case '*': result_d = result_d = static_cast<double>(first_num_i) * second_num_d;
+                        break;
+                }
             LineEdit_result->setText(QString::number(result_d));
         }
 #ifdef DEBUG
